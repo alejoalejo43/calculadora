@@ -1,0 +1,19 @@
+h1{
+    text-align: center;
+}
+.frame{
+    background-color: rgb(212, 204, 204);
+    width: 180px;
+    margin: auto;
+    border: 1px solid blue;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+input{
+    height: 30px;
+}
+button{
+    width: 40px;
+}
+.igual{
+    width: 84px;
+}
