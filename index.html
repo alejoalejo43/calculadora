@@ -17,42 +17,47 @@
             </tr>
             <tr>
                     <td>
-                        <button id="7" onclick="display(7)">%</button>
+                        <button id="porcentaje"   onclick="display(7)">%</button>
                         <button id="8" onclick="reset()">C</button>
-                        <button id="9" onclick="display(9)"><</button>
+                        <button id="f"  onclick="display(9)"><</button>
                         <button id="mas" onclick="sumar()">+</button>
-                    </td>
+                    </td> 
                 </tr>
             <tr>
                 <td>
-                    <button id="7" onclick="display(7)">7</button>
-                    <button id="8" onclick="display(8)">8</button>
-                    <button id="9" onclick="display(9)">9</button>
+                    <button data-number="7" >7</button>
+                    <button data-number="8" >8</button>
+                    <button data-number="9" >9</button>
                     <button id="menos" onclick="restar()">-</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button id="4" onclick="display(4)">4</button>
-                    <button id="5" onclick="display(5)">5</button>
-                    <button id="6" onclick="display(6)">6</button>
+                    <button id="number4" data-number="4" >4</button>
+                    <button data-number="5" >5</button>
+                    <button data-number="6" >6</button>
                     <button id="por" onclick="display('*')">*</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button id="1" onclick="display(1)">1</button>
-                    <button id="2" onclick="display(2)">2</button>
-                    <button id="3" onclick="display(3)">3</button>
+                    <button data-number="1" >1</button>
+                    <button data-number="2" >2</button>
+                    <button data-number="3" >3</button>
                     <button id="divi" onclick="display('/')">/</button>
                 </td>
             </tr>
             <tr>
                 <td>
                     <button id="masMenos">+-</button>
-                    <button id="0" onclick="display(0)">0</button>
+                    <button data-number="0" >0</button>
                     <button id="puto">,</button>
                     <button id="igual" class="igual" onclick="igual()">=</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="test" data-number="66">66</button>
                 </td>
             </tr>
         </table>

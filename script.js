@@ -17,6 +17,17 @@ function display(numero){
     document.getElementById("display").value = numero;
 } */
 
+document.querySelectorAll("button[data-number]")
+    .forEach(element => element.addEventListener("click", event => display(event)));
+
+
+function display(event) {
+    const numero = event.target.dataset.number;
+    valor = valor+numero;
+    document.getElementById("display").value = valor;    
+}
+
+
 document.getElementById("display").value = 0;
 var valor = " ";
 var acumulado = 0;
@@ -26,7 +37,7 @@ var multi = false;
 var divi = false;
 var p_operacion = true;
 
-function display(numero){
+function display2(numero){
     
     console.log("numeroValor: ",valor);
     console.log("numeroAcumulado: ",acumulado);
