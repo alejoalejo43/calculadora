@@ -1,13 +1,11 @@
 document.getElementById("display").value = 0;
 var valor = " ";
 var acumulado = 0;
-var suma = false;
-var resta = false;
-var multi = false;
-var divi = false;
 var p_operacion = true;
 var sign = " ";
 var signo = false;// es verdadero cuado a cambiado el acumulado
+var math = '';
+var tran = 'suma';
 
 //"button[data-number]"atribute selector
 document.querySelectorAll("button[data-number]")
@@ -30,13 +28,13 @@ function operation(e){
     sign = e.target.dataset.sign;
     
     switch(sign){
-        case 'add' : sumar();
+        case 'add' : math = 'suma';igual();
         break;
-        case 'subtract' : restar();
+        case 'subtract' : math = 'resta';igual();
         break;
-        case 'multiply' : multiply();
+        case 'multiply' : math = 'multi';igual();
         break;
-        case 'div' : division();
+        case 'div' : math = 'divi';igual();
         break;
         case 'equal' : igual();
         break;
@@ -54,212 +52,60 @@ function operation(e){
     }
 }
 
+function igual(){
 
-
-function sumar(){
-/*     if (valor===" "){  si acabado de oprimir un sigo y se oprime otro el display muestra NaN  (sigo acumulado)
-        valor=0;
-    } */
-    //else{
-        if (resta){
-            acumulado = acumulado - parseFloat(valor);
-            valor = " ";
-        }
-        else if(multi){
-            acumulado = acumulado * parseFloat(valor);
-            valor = " ";
-        }
-        else {
-            if(valor === " "){
-                acumulado = 0;
-            }
-            else{
-                acumulado = acumulado + parseFloat(valor);
-                valor = " ";
-                console.log("acumulado: " + acumulado);
-            }
-        }
-        
-        document.getElementById("display").value = acumulado;
-    //}
-    suma = true;
-    resta = false;
-    multi = false;
-    divi = false;
-    p_operacion = false;
-    signo = true;
-}
-function restar(){
-    if (p_operacion===true){
-        if(valor === " "){
-            acumulado = 0;
-        }
-        else{
-            acumulado = parseFloat(valor);
-        }
-        
-        p_operacion = false;
-       
+    if(valor === " "){// si no se ha puesto algun numero antes del signo + => acumulado = 0;
+        acumulado = 0;
     }
     else {
-        if(suma){
-            console.log("etra a suma de multi" + valor);
-            acumulado = acumulado + parseFloat(valor);
-            console.log("acumulado: " + acumulado);
-        }
-        else if (multi){
-            acumulado = acumulado * parseFloat(valor);
-        }
-        else{
-        acumulado = acumulado - parseFloat(valor);
-    }
-    }
-    
-    valor = " ";
-    document.getElementById("display").value = acumulado;
-    suma = false;
-    resta = true;
-    multi = false;
-    divi = false;
-    p_operacion = false;
-    signo = true;
-
-}
-function multiply(){
-    if (p_operacion===true){
-        if(valor === " "){
+        if (p_operacion === true){// valida si es la primer operacion
+            document.getElementById("display").value = parseFloat(valor);
             acumulado = 0;
-        }
+            valor = "";
+            p_operacion = false;
+           }
         else{
-            acumulado = parseFloat(valor);
+            if (math === 'suma'){
+                document.getElementById("display").value = acumulado + parseFloat(valor);
+                valor = "";
+                tran = math;
+            }
+            else if (math === 'resta'){
+                document.getElementById("display").value = acumulado - parseFloat(valor);
+                valor = "";
+            }
+            else if (math === 'multi'){
+                document.getElementById("display").value = acumulado * parseFloat(valor);
+                valor=1;
+            }
+            else if (math === 'divi'){
+                document.getElementById("display").value = acumulado / parseFloat(valor);
+                valor=1;
+            }
+            
         }
-        
+        acumulado = parseFloat(document.getElementById("display").value);
         p_operacion = false;
+        signo = true;
     }
-    else{
-        
-        if(suma){
-            acumulado = acumulado + parseFloat(valor);
-        }
-        else if (resta){
-            acumulado = acumulado - parseFloat(valor);
-        }
-        else if (multi){
-            acumulado = acumulado * parseFloat(valor);
-        }
     }
-    
-    valor = " ";
-    document.getElementById("display").value = acumulado;
-    suma = false;
-    resta = false;
-    multi = true;
-    divi = false;
-    p_operacion = false; 
-    signo = true;
-
-} 
-function division(){
-    if (p_operacion===true){
-        if(valor === " "){
-            acumulado = 0;
-        }
-        else{
-            acumulado = parseFloat(valor);
-        }
-        
-        p_operacion = false;
-    }
-    else{
-    
-        if(suma){
-            acumulado = acumulado + parseFloat(valor);
-        }
-        else if (multi){
-            acumulado = acumulado * parseFloat(valor);
-        }
-        else if (resta){
-            acumulado = acumulado - parseFloat(valor);
-        }
-        else{
-            console.log("etra  a divi");
-            acumulado = acumulado / parseFloat(valor);
-        }
-    }
-    valor = " ";
-    document.getElementById("display").value = acumulado;
-    suma = false;
-    resta = false;
-    multi = false;
-    divi = true;
-    p_operacion = false;
-    signo = true;
-
-}
 function percentage(){
-    if(multi || divi){
-        console.log("get in multi");
+    if(math === 'multi' || math === 'divi'){
         valor = valor / 100;
         document.getElementById("display").value = valor; 
     }
-    else if(suma ||restar){
-        console.log("get in suma");
+    else if(math === 'suma' ||math === 'restar'){
         valor = acumulado * valor / 100;  
         document.getElementById("display").value = valor; 
     }
     
     else{ reset();}
 }
-function igual(){
-    if (suma){
-        document.getElementById("display").value = acumulado + parseFloat(valor);
-        suma = true;
-        resta = false;
-        multi = false;
-        divi = false;
-        p_operacion = false;
-        valor=0;
-    }
-    else if (resta){
-        document.getElementById("display").value = acumulado - parseFloat(valor);
-        suma = false;
-        resta = true;
-        multi = false;
-        divi = false;
-        p_operacion = false;
-        valor=0;
-    }
-    else if (multi){
-        document.getElementById("display").value = acumulado * parseFloat(valor);
-        suma = false;
-        resta = false;
-        multi = true;
-        divi = false;
-        p_operacion = false; 
-        valor=1;
-    }
-    else if (divi){
-        document.getElementById("display").value = acumulado / parseFloat(valor);
-        suma = false;
-        resta = false;
-        multi = false;
-        divi = true;
-        p_operacion = false; 
-        valor=1;
-    }
-    acumulado = parseFloat(document.getElementById("display").value);
-    signo = true;
-
-    
-}
 function reset(){
     document.getElementById("display").value = 0;
     valor = " ";
     acumulado = 0;
-    suma = false;
-    resta = false;
-    multi = false;
-    divi = false;
+    math = '';
     p_operacion = true;
     signo = false;
 
