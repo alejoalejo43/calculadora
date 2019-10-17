@@ -2,19 +2,11 @@ document.getElementById("display").value = 0;
 var valor = " ";
 var acumulado = 0;
 var p_operacion = true;
-var sign = " ";
 var signo = false;// es verdadero cuado a cambiado el acumulado
-var math = '';
-var tran = 'suma';
+var lastOperation = null;
 
-//"button[data-number]"atribute selector
 document.querySelectorAll("button[data-number]")
-
-/* .forEach(
-    function(button){
-    button.addEventListener("click",function(e){display(e)})
-}); */
-.forEach(button=>button.addEventListener("click", e => display(e)));
+	.forEach(button => button.addEventListener("click", e => display(e)));
 
 function display(e) {
     const numero = e.target.dataset.number;
@@ -22,37 +14,45 @@ function display(e) {
     document.getElementById("display").value = valor;  
     signo = false;  
 }
-document.querySelectorAll("button[data-sign]").forEach(button=>button.addEventListener("click", e=>operation(e)));
+document.querySelectorAll("button[data-sign]").forEach(button=>button.addEventListener("click", e => operation(e)));
 
 function operation(e){
-    sign = e.target.dataset.sign;
-    
-    switch(sign){
-        case 'add' : math = 'suma';igual();
-        break;
-        case 'subtract' : math = 'resta';igual();
-        break;
-        case 'multiply' : math = 'multi';igual();
-        break;
-        case 'div' : math = 'divi';igual();
-        break;
-        case 'equal' : igual();
-        break;
-        case 'percentage' : percentage();
-        break;
-        case 'reset' : reset();
-        break;
-        case 'erase' : erase();
-        break;
-        case 'addSub' : addSub();
-        break;
-        case 'point' : console.log("point");
-        break;
+    switch(e.target.dataset.sign){
+        case 'add' : 
+            igual('suma');            
+        	break;
+        case 'subtract' : 
+            igual('resta');
+        	break;
+        case 'multiply' :
+            igual('multi');
+        	break;
+        case 'div' : 
+            igual('divi');
+        	break;
+		case 'equal' : 
+			igual();
+        	break;
+		case 'percentage' : 
+			percentage();
+        	break;
+		case 'reset' : 
+			reset();
+        	break;
+		case 'erase' : 
+			erase();
+        	break;
+		case 'addSub' : 
+			addSub();
+       		break;
+		case 'point' : 
+			console.log("point");
+        	break;
     
     }
 }
 
-function igual(){
+function igual(operation){
 
     if(valor === " "){// si no se ha puesto algun numero antes del signo + => acumulado = 0;
         acumulado = 0;
@@ -63,25 +63,26 @@ function igual(){
             acumulado = 0;
             valor = "";
             p_operacion = false;
+            lastOperation = operation;
+            
            }
         else{
-            if (math === 'suma'){
+            if (lastOperation === 'suma') {
                 document.getElementById("display").value = acumulado + parseFloat(valor);
-                valor = "";
-                tran = math;
             }
-            else if (math === 'resta'){
+            else if (lastOperation === 'resta'){
                 document.getElementById("display").value = acumulado - parseFloat(valor);
-                valor = "";
             }
-            else if (math === 'multi'){
+            else if (lastOperation === 'multi'){
                 document.getElementById("display").value = acumulado * parseFloat(valor);
-                valor=1;
+                
             }
-            else if (math === 'divi'){
-                document.getElementById("display").value = acumulado / parseFloat(valor);
-                valor=1;
+            else if (lastOperation === 'divi'){
+                document.getElementById("display").value = acumulado / parseFloat(valor);   
             }
+
+            valor = "";
+            lastOperation = operation;
             
         }
         acumulado = parseFloat(document.getElementById("display").value);
@@ -90,11 +91,11 @@ function igual(){
     }
     }
 function percentage(){
-    if(math === 'multi' || math === 'divi'){
+    if(lastOperation === 'multi' || lastOperation === 'divi'){
         valor = valor / 100;
         document.getElementById("display").value = valor; 
     }
-    else if(math === 'suma' ||math === 'restar'){
+    else if(lastOperation === 'suma' ||lastOperation === 'restar'){
         valor = acumulado * valor / 100;  
         document.getElementById("display").value = valor; 
     }
