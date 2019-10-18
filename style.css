@@ -3,17 +3,32 @@ h1{
 }
 .frame{
     background-color: rgb(212, 204, 204);
-    width: 180px;
+    width: 250px;
+    height: 330px;
     margin: auto;
-    border: 1px solid blue;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid gray;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 }
 input{
-    height: 30px;
-    width: 168px;
+    height: 50px;
+    width: 230px;
     text-align: right;
-    font-size: 20px;
+    margin-left: 8px;
+    margin-top: 8px;
+    font-size: 40px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 button{
-    width: 40px;
+    width: 53px;
+    height: 45px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+table{
+    margin-left: 10px;
+    margin-top: 8px;
 }
