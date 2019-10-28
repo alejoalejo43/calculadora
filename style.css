@@ -27,6 +27,28 @@ button{
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 25px;
+    /* background-color: #898989; */
+}
+.color{
+    background: rgb(158, 155, 151);
+}
+.strong{
+    background:rgb(93, 95, 99);
+}
+.signo{
+    color: gray;
+    font-size: 20px;
+}
+.signo2{
+    background: rgb(158, 155, 151);
+    color: gray;
+    font-size: 20px;
+}
+.strong2{
+    background: rgb(93, 95, 99);
+    color: gray;
+    font-size: 20px;
 }
 table{
     margin-left: 10px;

@@ -7,31 +7,60 @@ var signo = false;
 var lastOperation = null;
 var numero = null;
 var signCase = null;
+var eventTarget = null;
+var eTarget = null;
+var thisOne = null;
+var numSign = false; //numero o signo?
+
+
 
 document.querySelectorAll("button[data-number]")
-	.forEach(button => button.addEventListener("click", e => display(e)));
-
+.forEach(button => button.addEventListener("click", e => display(e)));
 function display(e) {
+    numSign = false;
     numero = e.target.dataset.number;
     pantalla();
-     
+    eventTarget = event.target;
+    eventTarget.setAttribute("class","strong");
+    setTimeout(function(){ eventTarget.setAttribute("class","color");
+                        }, 100);
 }
 function pantalla(){
     valor = valor+numero;
     document.getElementById("display").value = valor;  
     signo = false; 
+    numSign = false;// era un signo? => true
+    
 }
-document.querySelectorAll("button[data-sign]").forEach(button=>button.addEventListener("click", e => operation(e)));
+document.querySelectorAll("button[data-sign]")
+.forEach(button=>button.addEventListener("click", e => operation(e)));
 
 function operation (e) {
     signCase = e.target.dataset.sign;
     operationCase();
 }
 function operationCase(){
+   
+    thisOne = document.querySelector('button[data-sign="'+ signCase +'"]');
+            thisOne.setAttribute("class","strong2");
+            setTimeout(function(){ thisOne.setAttribute("class","signo");
+                                }, 100); 
+  
+    /* if (signCase === 'add' || signCase === 'subtract' || signCase === 'multiply' || signCase === 'div' ){
+        if (numSign){
+            
+            numSign = true;
+        }
+        
+        else{
+            numSign = true;
+            
+        }
+    } */
     switch (signCase) {
         case 'add': {
-            igual('suma');            
-        	break;
+            igual('suma');        
+            break;
         }
         case 'subtract': {
             igual('resta');
@@ -39,11 +68,11 @@ function operationCase(){
         } 
         case 'multiply': {
             igual('multi');
-            break;
+           break;
         }
         case 'div': {
             igual('divi');
-        	break;
+            break;
         }
         case 'equal': {
             igual();
@@ -66,7 +95,8 @@ function operationCase(){
             addSub();
        		break;
         }
-	}
+    }
+    
 }
 
 function igual(operation) {
@@ -81,7 +111,9 @@ function igual(operation) {
         if (p_operacion === true) {
             document.getElementById("display").value = parseFloat(valor);
             acumulado = 0;
+            
         } else {
+            
             if (lastOperation === 'suma') {
                 document.getElementById("display").value = acumulado + parseFloat(valor);
             } else if (lastOperation === 'resta') {
@@ -141,15 +173,20 @@ function erase() {
 function manejador(elEvento) {
     var evento = elEvento || window.event;
     
-    if ((evento.keyCode >=48 && evento.keyCode <=56)||evento.keyCode===46 ) {
+    if ((evento.keyCode >=48 && evento.keyCode <=57)||evento.keyCode===46 ) {
         numero = String.fromCharCode(evento.charCode);
         pantalla();
+        thisOne = document.querySelector('button[data-number="'+ numero + '"]');
+        thisOne.setAttribute("class","strong");
+        setTimeout(function(){ thisOne.setAttribute("class","");
+    }, 100);
     }
     
     switch (evento.keyCode) {
         case 47: {
             signCase = 'div';
-            operationCase();          
+            operationCase(); 
+                    
             break;
         }
         case 42: {
@@ -168,8 +205,11 @@ function manejador(elEvento) {
             break;
         }
         case 13: {
-            signCase = 'equal';
-            operationCase();  
+            thisOne = document.querySelector('button[data-sign="equal"]');
+            thisOne.setAttribute("class","strong2");
+            setTimeout(function(){ thisOne.setAttribute("class","signo");
+                                }, 100); 
+            igual(); 
             break;
         }
         //c
@@ -179,7 +219,7 @@ function manejador(elEvento) {
             break;
         }
         case 37: {
-            signCase = 'percent';
+            signCase = 'percentage';
             operationCase();            
             break;
             }
@@ -201,3 +241,28 @@ function manejador(elEvento) {
         operationCase();
     }
   }
+
+
+
+  document.querySelectorAll("button[data-number]")
+  .forEach(button => button.addEventListener("mouseover", event => getIn(event)));
+  function getIn (event){
+      event.target.setAttribute("class","color");
+  }
+  document.querySelectorAll("button[data-number]")
+  .forEach(button => button.addEventListener("mouseout", event => getOut(event)));
+  function getOut (event){
+      event.target.setAttribute("class","");
+  }
+
+  
+document.querySelectorAll("button[data-sign]")
+.forEach(button => button.addEventListener("mouseover", event => getIn2(event)));
+function getIn2 (event){
+    event.target.setAttribute("class","signo2");
+}
+document.querySelectorAll("button[data-sign]")
+.forEach(button => button.addEventListener("mouseout", event => getOut2(event)));
+function getOut2 (event){
+    event.target.setAttribute("class","signo");
+} 
