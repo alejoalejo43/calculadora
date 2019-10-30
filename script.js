@@ -10,14 +10,14 @@ var signCase = null;
 var eventTarget = null;
 var eTarget = null;
 var thisOne = null;
-var numSign = false; //numero o signo?
+var lastNum = null; //numero o signo?
 
 
 
 document.querySelectorAll("button[data-number]")
 .forEach(button => button.addEventListener("click", e => display(e)));
 function display(e) {
-    numSign = false;
+    lastNum = true;
     numero = e.target.dataset.number;
     pantalla();
     eventTarget = event.target;
@@ -29,7 +29,7 @@ function pantalla(){
     valor = valor+numero;
     document.getElementById("display").value = valor;  
     signo = false; 
-    numSign = false;// era un signo? => true
+    lastNum = true;// era un numero? => true
     
 }
 document.querySelectorAll("button[data-sign]")
@@ -42,21 +42,11 @@ function operation (e) {
 function operationCase(){
    
     thisOne = document.querySelector('button[data-sign="'+ signCase +'"]');
-            thisOne.setAttribute("class","strong2");
-            setTimeout(function(){ thisOne.setAttribute("class","signo");
+    thisOne.setAttribute("class","strong2");
+    setTimeout(function(){ thisOne.setAttribute("class","signo");
                                 }, 100); 
   
-    /* if (signCase === 'add' || signCase === 'subtract' || signCase === 'multiply' || signCase === 'div' ){
-        if (numSign){
-            
-            numSign = true;
-        }
-        
-        else{
-            numSign = true;
-            
-        }
-    } */
+
     switch (signCase) {
         case 'add': {
             igual('suma');        
@@ -113,22 +103,26 @@ function igual(operation) {
             acumulado = 0;
             
         } else {
-            
-            if (lastOperation === 'suma') {
-                document.getElementById("display").value = acumulado + parseFloat(valor);
-            } else if (lastOperation === 'resta') {
-                document.getElementById("display").value = acumulado - parseFloat(valor);
-            } else if (lastOperation === 'multi') {
-                document.getElementById("display").value = acumulado * parseFloat(valor);
-            } else if (lastOperation === 'divi') {
-                document.getElementById("display").value = acumulado / parseFloat(valor);   
-            }
+                
+                // era un numero? => true
+                if (lastNum){               
+                    if (lastOperation === 'suma') {
+                        document.getElementById("display").value = acumulado + parseFloat(valor);
+                    } else if (lastOperation === 'resta') {
+                        document.getElementById("display").value = acumulado - parseFloat(valor);
+                    } else if (lastOperation === 'multi') {
+                        document.getElementById("display").value = acumulado * parseFloat(valor);
+                    } else if (lastOperation === 'divi') {
+                        document.getElementById("display").value = acumulado / parseFloat(valor);   
+                    }
+                }
         }
         valor = "";
         lastOperation = operation;
         acumulado = parseFloat(document.getElementById("display").value);
         p_operacion = false;
         signo = true;
+        lastNum = false;
     }
     }
 function percent() {
